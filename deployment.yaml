@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-deployment 
+  namespace: ingress
+  labels:
+    app: bar-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: bar
+        image: hashicorp/http-echo
+        args: 
+          - "-text=bar"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo-deployment
+  namespace: ingress
+  labels:
+    app: foo-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: foo
+        image: hashicorp/http-echo
+        args:
+          - "-text=foo"

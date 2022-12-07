@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: service
+  namespace: ingress
+spec:
+  selector:
+    app: app
+  ports:
+    - port: 5678
